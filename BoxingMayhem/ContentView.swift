@@ -67,8 +67,12 @@ import UIKit
 // }
 
 struct VideoPreview: UIViewControllerRepresentable {
+    @EnvironmentObject var gameService: GameService
+
     func makeUIViewController(context: Context) -> ViewController {
-        return ViewController()
+        var viewController = ViewController()
+        viewController.gameService = gameService
+        return viewController
     }
 
     func updateUIViewController(_ uiViewController: ViewController, context: Context) {
@@ -78,98 +82,59 @@ struct VideoPreview: UIViewControllerRepresentable {
 
 struct ContentView: View {
     @StateObject var gameService = GameService()
-    @StateObject var device = Device()
+    @State var bgLoc = CGPoint(x: Device.width / 2, y: Device.height / 2)
+    @State var bgPosX = Device.width / 2 * 1.2
+    @State var goToLeft = false
+    @State var gameStart = false
 
     var body: some View {
-        ZStack {
-            Image("background")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea(.all)
-            Character(info: CharInfo.opponent, state: $gameService.opponentState, isFlipped: $gameService.opponentFlipped)
-                .position(x: device.width/2, y: device.height/2 - (device.height/3))
+        NavigationView {
+            ZStack {
+                Image("background")
+                    .resizable()
+                    .frame(width: Device.width * 1.2, height: Device.height)
+                    .position(bgLoc)
+                    .scaledToFill()
+                    .background(Color.blue.secondary)
+                    .ignoresSafeArea(.all)
+                    .onAppear {
+                        withAnimation(Animation.linear(duration: 15).repeatForever()) {
+                            bgLoc = CGPoint(x: bgPosX, y: Device.height / 2)
+                        }
 
-            Character(info: CharInfo.player, state: $gameService.playerState, isFlipped: $gameService.playerFlipped)
+                        Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
+                            if goToLeft {
+                                bgPosX = Device.width / 2 / 1.2
+                            }
+                        })
+                    }
 
-//            Jab
-            Button(action: {
-                gameService.updatePlayerState(newState: "jab")
-            }) {
-                Text("Jab")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 200, y: UIScreen.main.bounds.height - 200)
+                VStack {}
+                    .frame(
+                        minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
+                    .background(Color.gray.opacity(0.3))
 
-//            Hook
-            Button(action: {
-                gameService.updatePlayerState(newState: "hook")
-            }) {
-                Text("Hook")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 100, y: UIScreen.main.bounds.height - 350)
+                Button {
+                    gameStart = true
+                } label: {
+                    Image("fight")
 
-//            Uppercut
-            Button(action: {
-                gameService.updatePlayerState(newState: "uppercut")
-            }) {
-                Text("uppercut")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 300, y: UIScreen.main.bounds.height - 350)
-
-            Text("State: " + gameService.playerState)
-                .padding(40)
-                .foregroundStyle(.white)
-                .fontWeight(.bold)
-                .background(.blue)
-                .font(.title)
-                .cornerRadius(20)
-                .position(x: 200, y: 100)
-
-            if gameService.playerHealth <= 0 || gameService.opponentHealth <= 0 {
-                KnockedCount()
+                }.onTapGesture {
+                    withAnimation(Animation.spring(duration: 1)) {
+                        scaleEffect(1.5)
+                    }
+                }
             }
         }
-        .environmentObject(device)
-        .environmentObject(gameService)
-        .onAppear {
-            print("Width: \(device.width)")
-            print("Height: \(device.height)")
+        .fullScreenCover(isPresented: $gameStart) {
+            Game()
         }
-//        .background(.blue)
-//        NavigationLink {
-//            VideoPreview()
-//                .ignoresSafeArea(.all)
-//        } label: {
-//            Image("play.fill")
-//                .resizable()
-//                .frame(width: 50, height: 50)
-//        }
-
-//        VideoPreview()
-
-//            .ignoresSafeArea(.all)
-//                .rotationEffect(.degrees(90))
-//                .background(.black)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

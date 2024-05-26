@@ -30,7 +30,6 @@ struct Character: View {
     @State var animationFrame = 1
     @State var isIncrement = true
     @State var sequence = "0"
-    @EnvironmentObject var device: Device
 
     func updateState() {
         if isIncrement {
@@ -58,19 +57,19 @@ struct Character: View {
             }
 
             if animationFrame == 1 {
-                xPos = device.width / 2 - 10
+                xPos = Device.width / 2 - 10
 //                yPos = device.height - 200 - (device.height / 10 - 30)
-                yPos = device.height - (device.height * 0.24) - 10
+                yPos = Device.height - (Device.height * 0.24) - 10
 
             } else if animationFrame == 2 {
-                xPos = device.width / 2
+                xPos = Device.width / 2
 //                yPos = device.height - 200 - (device.height / 10 - 20)
-                yPos = device.height - (device.height * 0.24)
+                yPos = Device.height - (Device.height * 0.24)
 
             } else {
-                xPos = device.width / 2 + 10
+                xPos = Device.width / 2 + 10
 //                yPos = device.height - 200 - (device.height / 10 - 30)
-                yPos = device.height - (device.height * 0.24) - 10
+                yPos = Device.height - (Device.height * 0.24) - 10
 
                 isIncrement = false
             }
@@ -91,7 +90,7 @@ struct Character: View {
         Image(info.type + "-" + state + ((info.type == "opponent" && state == "none") || state == "knock" ? sequence : ""))
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: device.height * 0.55)
+            .frame(height: Device.height * 0.55)
             .scaleEffect(x: isFlipped ? -1 : 1, y: 1)
             .position(x: xPos, y: yPos)
             .onAppear {
@@ -103,9 +102,7 @@ struct Character: View {
 
 struct CharacterPreview: PreviewProvider {
     static var info = CharInfo.opponent
-    static var device = Device()
     static var previews: some View {
         Character(info: info, state: .constant("none"), isFlipped: .constant(false))
-            .environmentObject(device)
     }
 }

@@ -16,13 +16,14 @@ class GameService: ObservableObject {
     @Published var opponentHealth = 100
     @Published var winner = ""
     @Published var movementSet = ["jab", "hook", "uppercut"]
-    @Published var knockedCounter = "1"
+    @Published var knockedCounter = "ko"
     @Published var stateDelay = 0
+    @Published var gameStarted = false
 
     var movementTimer: Timer?
 
     func opponentStartMove() {
-        movementTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { timer in
+        movementTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             timer.tolerance = 1
 
 //            Generate Random Move on Opponent
@@ -36,26 +37,31 @@ class GameService: ObservableObject {
     }
 
     func playerResetToNone() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             self.playerState = "none"
             self.playerFlipped = false
         }
     }
-    
-    func stateDelayReset() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-            self.stateDelay = 0
-        }
-    }
 
     func opponentResetToNone() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             self.opponentState = "none"
             self.opponentFlipped = false
         }
     }
 
+    func stateDelayReset() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            self.stateDelay = 0
+        }
+    }
+
     func updatePlayerState(newState: String) {
+        print("New Player State: "+newState)
+        if playerState != "none" {
+            return
+        }
+
         playerState = newState
         let randomBool = Bool.random()
         playerFlipped = randomBool
@@ -65,12 +71,12 @@ class GameService: ObservableObject {
 
 //        Check if the player punch is valid
         if newState != "none" && opponentState == "none" {
-            opponentHealth -= 25
-            let isKnocked = updateHealth()
-
-            if isKnocked {
-                return
-            }
+//            opponentHealth -= 25
+//            let isKnocked = updateHealth()
+//
+//            if isKnocked {
+//                return
+//            }
 
             opponentState = "punched"
             opponentFlipped = randomBool
@@ -113,7 +119,11 @@ class GameService: ObservableObject {
         }
 
         if opponentHealth <= 0 {
-            opponentState = "knock"
+            opponentState = "punched"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+                self.opponentState = "knock"
+            }
+
             stopOpponentMove()
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 self.opponentHealth = 75

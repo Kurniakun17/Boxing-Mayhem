@@ -1,5 +1,5 @@
 //
-//  KnockedCount.swift
+//  StartGameCountt.swift
 //  BoxingMayhem
 //
 //  Created by Kurnia Kharisma Agung Samiadjie on 26/05/24.
@@ -7,24 +7,30 @@
 
 import SwiftUI
 
-struct KnockedCount: View {
+struct StartGameCount: View {
     @EnvironmentObject var gameService: GameService
+    @State var countDown = "3"
 
     var body: some View {
         ZStack {
-            Image(gameService.knockedCounter)
-                .id(gameService.knockedCounter)
+            Image(countDown)
+                .id(countDown)
                 .transition(.scale.animation(.bouncy))
                 .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
                 .onAppear {
                     Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
                         timer in
-                        if gameService.knockedCounter == "10" {
+                        if countDown == "1" {
+                            countDown = "fight"
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                gameService.gameStarted = true
+                            }
                             timer.invalidate()
+
                             return
                         }
 
-                        gameService.knockedCounter = String(Int(gameService.knockedCounter)! + 1)
+                        countDown = String(Int(countDown)! - 1)
                     })
                 }
         }
@@ -40,9 +46,7 @@ struct KnockedCount: View {
     }
 }
 
-struct KnockedCount_Previews: PreviewProvider {
-    static var previews: some View {
-        KnockedCount()
-            .environmentObject(GameService())
-    }
+#Preview {
+    StartGameCount()
+        .environmentObject(GameService())
 }

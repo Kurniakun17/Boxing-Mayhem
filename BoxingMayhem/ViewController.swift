@@ -2,14 +2,20 @@ import AVFoundation
 import UIKit
 
 class ViewController: UIViewController {
+    var gameService: GameService?
     let videoCapture = VideoCapture()
     var previewLayer: AVCaptureVideoPreviewLayer?
     var pointsLayer = CAShapeLayer()
+    var actionTimer: DispatchSourceTimer?
+    var actionPending: String?
+    let actionQueue = DispatchQueue(label: "com.example.actionQueue", qos: .userInitiated)
+    let actionSemaphore = DispatchSemaphore(value: 1)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupVideoPreview()
+        setupActionTimer()
 
         videoCapture.predictor.delegate = self
     }
@@ -27,12 +33,35 @@ class ViewController: UIViewController {
         pointsLayer.frame = view.frame
         pointsLayer.strokeColor = UIColor.red.cgColor
     }
+
+    private func setupActionTimer() {
+        actionTimer = DispatchSource.makeTimerSource(queue: .main)
+        actionTimer?.schedule(deadline: .now(), repeating: 0.4)
+        actionTimer?.setEventHandler { [weak self] in
+            self?.performPendingAction()
+        }
+        actionTimer?.resume()
+    }
+
+    private func performPendingAction() {
+        if let pendingAction = actionPending {
+            actionPending = nil
+
+            DispatchQueue.main.async {
+                self.gameService?.updatePlayerState(newState: pendingAction)
+            }
+        }
+    }
 }
 
 extension ViewController: PredictorDelegate {
     func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
         if confidence >= 0.9 {
-            print(action)
+//            print(action)
+            DispatchQueue.main.async {
+                self.actionPending = action
+//                self.gameService?.updatePlayerState(newState: action)
+            }
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {}
