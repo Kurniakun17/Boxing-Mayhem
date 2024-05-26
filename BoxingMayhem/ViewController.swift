@@ -1,4 +1,6 @@
+
 import AVFoundation
+import SwiftUI
 import UIKit
 
 class ViewController: UIViewController {
@@ -8,8 +10,7 @@ class ViewController: UIViewController {
     var pointsLayer = CAShapeLayer()
     var actionTimer: DispatchSourceTimer?
     var actionPending: String?
-    let actionQueue = DispatchQueue(label: "com.example.actionQueue", qos: .userInitiated)
-    let actionSemaphore = DispatchSemaphore(value: 1)
+    var lastActionTime: Date = .init(timeIntervalSince1970: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,25 +27,32 @@ class ViewController: UIViewController {
 
         guard let previewLayer = previewLayer else { return }
 
+//        previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
-        previewLayer.frame = view.frame
+        print(view.frame)
+        previewLayer.frame = CGRect(x: 0.0, y: Device.height - 270, width: 480, height: 270)
 
-        view.layer.addSublayer(pointsLayer)
-        pointsLayer.frame = view.frame
-        pointsLayer.strokeColor = UIColor.red.cgColor
+        previewLayer.connection?.videoOrientation = .landscapeLeft
+
+//        Dots Hand
+//        view.layer.addSublayer(pointsLayer)
+//        pointsLayer.frame = view.frame
+//        pointsLayer.strokeColor = UIColor.red.cgColor
     }
 
     private func setupActionTimer() {
         actionTimer = DispatchSource.makeTimerSource(queue: .main)
         actionTimer?.schedule(deadline: .now(), repeating: 0.4)
         actionTimer?.setEventHandler { [weak self] in
+
             self?.performPendingAction()
         }
         actionTimer?.resume()
     }
 
     private func performPendingAction() {
-        if let pendingAction = actionPending {
+        if let pendingAction = actionPending, Date().timeIntervalSince(lastActionTime) >= 0.4 {
+            lastActionTime = Date()
             actionPending = nil
 
             DispatchQueue.main.async {
@@ -57,35 +65,32 @@ class ViewController: UIViewController {
 extension ViewController: PredictorDelegate {
     func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double) {
         if confidence >= 0.9 {
-//            print(action)
+            // Ensure this update is performed on the main thread
             DispatchQueue.main.async {
                 self.actionPending = action
-//                self.gameService?.updatePlayerState(newState: action)
             }
         }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {}
     }
 
     func predictor(_ predictor: Predictor, didFindRecognizedPoints points: [CGPoint]) {
-        guard let previewLayer = previewLayer else { return }
-
-        let convertedPoints = points.map {
-            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
-        }
-
-        let combinedPath = CGMutablePath()
-
-        for point in convertedPoints {
-            let dotPath = UIBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
-            combinedPath.addPath(dotPath.cgPath)
-        }
-
-        pointsLayer.path = combinedPath
-
-        DispatchQueue.main.async {
-            self.pointsLayer.didChangeValue(for: \.path)
-        }
+//        guard let previewLayer = previewLayer else { return }
+//
+//        let convertedPoints = points.map {
+//            previewLayer.layerPointConverted(fromCaptureDevicePoint: $0)
+//        }
+//
+//        let combinedPath = CGMutablePath()
+//
+//        for point in convertedPoints {
+//            let dotPath = UIBezierPath(ovalIn: CGRect(x: point.x, y: point.y, width: 10, height: 10))
+//            combinedPath.addPath(dotPath.cgPath)
+//        }
+//
+//        pointsLayer.path = combinedPath
+//
+//        DispatchQueue.main.async {
+//            self.pointsLayer.didChangeValue(for: \.path)
+//        }
     }
 }
 

@@ -11,13 +11,14 @@ struct ContentView2: View {
     @StateObject var gameService = GameService()
     var body: some View {
         NavigationView {
-            VideoPreview()
-                .frame(width: 320, height: 180)
-                .background(.black)
+            ZStack {
+                VideoPreview()
+//                    .rotationEffect(.degrees(90))
+//                    .position(x: 180, y: 300)
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(gameService)
-//            .rotationEffect(.degrees(90))
 //            .ignoresSafeArea(.all)
     }
 }

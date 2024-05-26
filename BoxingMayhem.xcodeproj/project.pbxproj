@@ -11,6 +11,9 @@
 		F61060512C0366B100F67949 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060502C0366B100F67949 /* ContentView2.swift */; };
 		F61060532C0373F900F67949 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060522C0373F900F67949 /* Game.swift */; };
 		F61060552C0394D700F67949 /* StartGameCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060542C0394D700F67949 /* StartGameCount.swift */; };
+		F619AB592C03E4B40030D6F5 /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619AB582C03E4B40030D6F5 /* HealthBar.swift */; };
+		F619AB5B2C03ED3E0030D6F5 /* JoyStick.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619AB5A2C03ED3E0030D6F5 /* JoyStick.swift */; };
+		F619AB5D2C03F0110030D6F5 /* GameResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619AB5C2C03F0110030D6F5 /* GameResult.swift */; };
 		F66891D82BFC3AE400BE194A /* BoxingMayhemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891D72BFC3AE400BE194A /* BoxingMayhemApp.swift */; };
 		F66891DA2BFC3AE400BE194A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891D92BFC3AE400BE194A /* ContentView.swift */; };
 		F66891DC2BFC3AE600BE194A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F66891DB2BFC3AE600BE194A /* Assets.xcassets */; };
@@ -29,6 +32,9 @@
 		F61060502C0366B100F67949 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		F61060522C0373F900F67949 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		F61060542C0394D700F67949 /* StartGameCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCount.swift; sourceTree = "<group>"; };
+		F619AB582C03E4B40030D6F5 /* HealthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
+		F619AB5A2C03ED3E0030D6F5 /* JoyStick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoyStick.swift; sourceTree = "<group>"; };
+		F619AB5C2C03F0110030D6F5 /* GameResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResult.swift; sourceTree = "<group>"; };
 		F66891D42BFC3AE400BE194A /* BoxingMayhem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxingMayhem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66891D72BFC3AE400BE194A /* BoxingMayhemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxingMayhemApp.swift; sourceTree = "<group>"; };
 		F66891D92BFC3AE400BE194A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +107,8 @@
 				F66891F02BFDE5EA00BE194A /* Character.swift */,
 				F610604E2C03260900F67949 /* KnockedCount.swift */,
 				F61060542C0394D700F67949 /* StartGameCount.swift */,
+				F619AB582C03E4B40030D6F5 /* HealthBar.swift */,
+				F619AB5A2C03ED3E0030D6F5 /* JoyStick.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -120,6 +128,7 @@
 				F66891EF2BFDE5D300BE194A /* Components */,
 				F61060502C0366B100F67949 /* ContentView2.swift */,
 				F61060522C0373F900F67949 /* Game.swift */,
+				F619AB5C2C03F0110030D6F5 /* GameResult.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,9 +207,12 @@
 				F66891EC2BFC43E700BE194A /* VideoCapture.swift in Sources */,
 				F66891F92C02263B00BE194A /* GameService.swift in Sources */,
 				F610604F2C03260900F67949 /* KnockedCount.swift in Sources */,
+				F619AB5D2C03F0110030D6F5 /* GameResult.swift in Sources */,
 				F66891E82BFC3BA600BE194A /* BoxingHand Refined.mlpackage in Sources */,
+				F619AB5B2C03ED3E0030D6F5 /* JoyStick.swift in Sources */,
 				F66891EA2BFC435300BE194A /* ViewController.swift in Sources */,
 				F61060552C0394D700F67949 /* StartGameCount.swift in Sources */,
+				F619AB592C03E4B40030D6F5 /* HealthBar.swift in Sources */,
 				F66891F12BFDE5EA00BE194A /* Character.swift in Sources */,
 				F61060532C0373F900F67949 /* Game.swift in Sources */,
 				F66891EE2BFCF0C300BE194A /* Predictor.swift in Sources */,

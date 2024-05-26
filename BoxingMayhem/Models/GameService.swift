@@ -18,7 +18,7 @@ class GameService: ObservableObject {
     @Published var movementSet = ["jab", "hook", "uppercut"]
     @Published var knockedCounter = "ko"
     @Published var stateDelay = 0
-    @Published var gameStarted = false
+    @Published var gameState = "lobby"
 
     var movementTimer: Timer?
 
@@ -57,7 +57,6 @@ class GameService: ObservableObject {
     }
 
     func updatePlayerState(newState: String) {
-        print("New Player State: "+newState)
         if playerState != "none" {
             return
         }
@@ -71,12 +70,12 @@ class GameService: ObservableObject {
 
 //        Check if the player punch is valid
         if newState != "none" && opponentState == "none" {
-//            opponentHealth -= 25
-//            let isKnocked = updateHealth()
-//
-//            if isKnocked {
-//                return
-//            }
+            opponentHealth -= 100
+            let isKnocked = updateHealth()
+
+            if isKnocked {
+                return
+            }
 
             opponentState = "punched"
             opponentFlipped = randomBool
@@ -111,6 +110,12 @@ class GameService: ObservableObject {
         }
     }
 
+    func opponentGetUp() {
+        opponentHealth = 75
+        opponentState = "none"
+        knockedCounter = "ko"
+    }
+
     func updateHealth() -> Bool {
         if playerHealth <= 0 {
             playerState = "knock"
@@ -124,13 +129,7 @@ class GameService: ObservableObject {
                 self.opponentState = "knock"
             }
 
-            stopOpponentMove()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                self.opponentHealth = 75
-                self.opponentState = "none"
-                self.knockedCounter = "1"
-                self.winner = "player"
-            }
+//            stopOpponentMove()
             return true
         }
 

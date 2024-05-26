@@ -23,7 +23,7 @@ struct StartGameCount: View {
                         if countDown == "1" {
                             countDown = "fight"
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                gameService.gameStarted = true
+                                gameService.gameState = "fight"
                             }
                             timer.invalidate()
 

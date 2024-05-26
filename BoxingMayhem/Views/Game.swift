@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Game: View {
+    @Binding var isGamePlayed: Bool
     @StateObject var gameService = GameService()
 
     var body: some View {
@@ -19,73 +20,49 @@ struct Game: View {
                 .ignoresSafeArea(.all)
             Character(info: CharInfo.opponent, state: $gameService.opponentState, isFlipped: $gameService.opponentFlipped)
                 .position(x: Device.width/2, y: Device.height/2 - (Device.height/3))
+                .onAppear {
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: gameService.winner == "", block: {
+                        _ in
+                        if gameService.opponentHealth < 100, gameService.opponentHealth > 0 {
+                            gameService.opponentHealth += 2
+                        }
+
+                    })
+                }
 
             Character(info: CharInfo.player, state: $gameService.playerState, isFlipped: $gameService.playerFlipped)
 
-//            Jab
-            Button(action: {
-                gameService.updatePlayerState(newState: "jab")
-            }) {
-                Text("Jab")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 200, y: UIScreen.main.bounds.height - 200)
-
-//            Hook
-            Button(action: {
-                gameService.updatePlayerState(newState: "hook")
-            }) {
-                Text("Hook")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 100, y: UIScreen.main.bounds.height - 350)
-
-//            Uppercut
-            Button(action: {
-                gameService.updatePlayerState(newState: "uppercut")
-            }) {
-                Text("uppercut")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 300, y: UIScreen.main.bounds.height - 350)
-
             Text("State: " + gameService.playerState)
-                .padding(40)
+                .padding(16)
                 .foregroundStyle(.white)
                 .fontWeight(.bold)
                 .background(.blue)
                 .font(.title)
                 .cornerRadius(20)
-                .position(x: 200, y: 100)
+                .position(x: 150, y: 150)
+
+            JoyStick()
+
+            HealthBar(charInfo: CharInfo.player)
+                .position(x: 500/2 + 50, y: 70)
+
+            Image("vs")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 199)
+                .position(x: Device.width/2, y: 80)
+
+            HealthBar(charInfo: CharInfo.opponent)
+                .position(x: Device.width - 500/2 - 50, y: 70)
 
             if gameService.playerHealth <= 0 || gameService.opponentHealth <= 0 {
                 KnockedCount()
             }
 
-            if !gameService.gameStarted {
+            if gameService.gameState != "fight" {
                 StartGameCount()
-            }
-
-            if gameService.gameStarted {
-//              add camera preview
+            } else {
+                VideoPreview()
             }
         }
         .environmentObject(gameService)
@@ -93,24 +70,9 @@ struct Game: View {
             print("Width: \(Device.width)")
             print("Height: \(Device.height)")
         }
-//        .background(.blue)
-//        NavigationLink {
-//            VideoPreview()
-//                .ignoresSafeArea(.all)
-//        } label: {
-//            Image("play.fill")
-//                .resizable()
-//                .frame(width: 50, height: 50)
-//        }
-
-//        VideoPreview()
-
-//            .ignoresSafeArea(.all)
-//                .rotationEffect(.degrees(90))
-//                .background(.black)
     }
 }
 
 #Preview {
-    Game()
+    Game(isGamePlayed: .constant(true))
 }

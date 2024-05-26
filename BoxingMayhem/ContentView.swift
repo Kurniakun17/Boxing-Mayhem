@@ -70,7 +70,7 @@ struct VideoPreview: UIViewControllerRepresentable {
     @EnvironmentObject var gameService: GameService
 
     func makeUIViewController(context: Context) -> ViewController {
-        var viewController = ViewController()
+        let viewController = ViewController()
         viewController.gameService = gameService
         return viewController
     }
@@ -85,7 +85,7 @@ struct ContentView: View {
     @State var bgLoc = CGPoint(x: Device.width / 2, y: Device.height / 2)
     @State var bgPosX = Device.width / 2 * 1.2
     @State var goToLeft = false
-    @State var gameStart = false
+    @State var isGamePlayed = false
 
     var body: some View {
         NavigationView {
@@ -120,7 +120,7 @@ struct ContentView: View {
                     .background(Color.gray.opacity(0.3))
 
                 Button {
-                    gameStart = true
+                    gameService.gameState = "start"
                 } label: {
                     Image("fight")
 
@@ -131,8 +131,8 @@ struct ContentView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $gameStart) {
-            Game()
+        .fullScreenCover(isPresented: $isGamePlayed) {
+            Game(isGamePlayed: $isGamePlayed)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
