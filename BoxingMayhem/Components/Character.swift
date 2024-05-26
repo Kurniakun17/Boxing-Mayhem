@@ -26,9 +26,11 @@ struct Character: View {
     @Binding var state: String
     @Binding var isFlipped: Bool
     @State var xPos = UIScreen.main.bounds.width / 2
-    @State var yPos = UIScreen.main.bounds.height - 260
+    @State var yPos = UIScreen.main.bounds.height - (UIScreen.main.bounds.height * 0.24)
     @State var animationFrame = 1
     @State var isIncrement = true
+    @State var sequence = "0"
+    @EnvironmentObject var device: Device
 
     func updateState() {
         if isIncrement {
@@ -44,38 +46,66 @@ struct Character: View {
         }
     }
 
+    func updateFrame() {
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {
+            _ in
+
+            updateSequence()
+            updateState()
+
+            if state == "knock" {
+                return
+            }
+
+            if animationFrame == 1 {
+                xPos = device.width / 2 - 10
+//                yPos = device.height - 200 - (device.height / 10 - 30)
+                yPos = device.height - (device.height * 0.24) - 10
+
+            } else if animationFrame == 2 {
+                xPos = device.width / 2
+//                yPos = device.height - 200 - (device.height / 10 - 20)
+                yPos = device.height - (device.height * 0.24)
+
+            } else {
+                xPos = device.width / 2 + 10
+//                yPos = device.height - 200 - (device.height / 10 - 30)
+                yPos = device.height - (device.height * 0.24) - 10
+
+                isIncrement = false
+            }
+
+        })
+    }
+
+    func updateSequence() {
+        if animationFrame == 1 {
+            sequence = "0"
+
+        } else if animationFrame == 3 {
+            sequence = "1"
+        }
+    }
+
     var body: some View {
-        Image(info.type + "-" + state)
+        Image(info.type + "-" + state + ((info.type == "opponent" && state == "none") || state == "knock" ? sequence : ""))
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: device.height * 0.55)
             .scaleEffect(x: isFlipped ? -1 : 1, y: 1)
-            .frame(height: 100)
             .position(x: xPos, y: yPos)
             .onAppear {
-                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {
-                    _ in
-                    if animationFrame == 1 {
-                        xPos = UIScreen.main.bounds.width / 2 - 10
-                        yPos = UIScreen.main.bounds.height - 270
-
-                    } else if animationFrame == 2 {
-                        xPos = UIScreen.main.bounds.width / 2
-                        yPos = UIScreen.main.bounds.height - 280
-
-                    } else {
-                        xPos = UIScreen.main.bounds.width / 2 + 10
-                        yPos = UIScreen.main.bounds.height - 270
-                        isIncrement = false
-                    }
-
-                    updateState()
-                })
+                updateFrame()
             }
             .ignoresSafeArea(edges: .all)
     }
 }
 
-struct PlayerPreview: PreviewProvider {
-    static var info = CharInfo.player
+struct CharacterPreview: PreviewProvider {
+    static var info = CharInfo.opponent
+    static var device = Device()
     static var previews: some View {
-        Character(info: info, state: .constant("uppercut"), isFlipped: .constant(false))
+        Character(info: info, state: .constant("none"), isFlipped: .constant(false))
+            .environmentObject(device)
     }
 }

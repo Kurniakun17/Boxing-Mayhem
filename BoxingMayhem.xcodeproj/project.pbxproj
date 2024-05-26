@@ -7,18 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F610604F2C03260900F67949 /* KnockedCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610604E2C03260900F67949 /* KnockedCount.swift */; };
 		F66891D82BFC3AE400BE194A /* BoxingMayhemApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891D72BFC3AE400BE194A /* BoxingMayhemApp.swift */; };
 		F66891DA2BFC3AE400BE194A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891D92BFC3AE400BE194A /* ContentView.swift */; };
 		F66891DC2BFC3AE600BE194A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F66891DB2BFC3AE600BE194A /* Assets.xcassets */; };
 		F66891DF2BFC3AE600BE194A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F66891DE2BFC3AE600BE194A /* Preview Assets.xcassets */; };
+		F66891E82BFC3BA600BE194A /* BoxingHand Refined.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = F66891E72BFC3BA600BE194A /* BoxingHand Refined.mlpackage */; };
+		F66891EA2BFC435300BE194A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891E92BFC435300BE194A /* ViewController.swift */; };
+		F66891EC2BFC43E700BE194A /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891EB2BFC43E700BE194A /* VideoCapture.swift */; };
+		F66891EE2BFCF0C300BE194A /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891ED2BFCF0C300BE194A /* Predictor.swift */; };
+		F66891F12BFDE5EA00BE194A /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891F02BFDE5EA00BE194A /* Character.swift */; };
+		F66891F72C01B92D00BE194A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891F62C01B92D00BE194A /* Device.swift */; };
+		F66891F92C02263B00BE194A /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66891F82C02263B00BE194A /* GameService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F610604E2C03260900F67949 /* KnockedCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockedCount.swift; sourceTree = "<group>"; };
 		F66891D42BFC3AE400BE194A /* BoxingMayhem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxingMayhem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66891D72BFC3AE400BE194A /* BoxingMayhemApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxingMayhemApp.swift; sourceTree = "<group>"; };
 		F66891D92BFC3AE400BE194A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F66891DB2BFC3AE600BE194A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F66891DE2BFC3AE600BE194A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F66891E72BFC3BA600BE194A /* BoxingHand Refined.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = "BoxingHand Refined.mlpackage"; path = "../../../../work/apple-dev/BoxingHand Refined.mlpackage"; sourceTree = "<group>"; };
+		F66891E92BFC435300BE194A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F66891EB2BFC43E700BE194A /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		F66891ED2BFCF0C300BE194A /* Predictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
+		F66891F02BFDE5EA00BE194A /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		F66891F62C01B92D00BE194A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		F66891F82C02263B00BE194A /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +67,17 @@
 		F66891D62BFC3AE400BE194A /* BoxingMayhem */ = {
 			isa = PBXGroup;
 			children = (
+				F66891F52C01AC2D00BE194A /* Views */,
+				F66891F22C01AC0E00BE194A /* Models */,
+				F66891EF2BFDE5D300BE194A /* Components */,
+				F66891E72BFC3BA600BE194A /* BoxingHand Refined.mlpackage */,
 				F66891D72BFC3AE400BE194A /* BoxingMayhemApp.swift */,
+				F66891E92BFC435300BE194A /* ViewController.swift */,
 				F66891D92BFC3AE400BE194A /* ContentView.swift */,
 				F66891DB2BFC3AE600BE194A /* Assets.xcassets */,
 				F66891DD2BFC3AE600BE194A /* Preview Content */,
+				F66891EB2BFC43E700BE194A /* VideoCapture.swift */,
+				F66891ED2BFCF0C300BE194A /* Predictor.swift */,
 			);
 			path = BoxingMayhem;
 			sourceTree = "<group>";
@@ -65,6 +88,31 @@
 				F66891DE2BFC3AE600BE194A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F66891EF2BFDE5D300BE194A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F66891F02BFDE5EA00BE194A /* Character.swift */,
+				F610604E2C03260900F67949 /* KnockedCount.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F66891F22C01AC0E00BE194A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F66891F62C01B92D00BE194A /* Device.swift */,
+				F66891F82C02263B00BE194A /* GameService.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F66891F52C01AC2D00BE194A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +186,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F66891DA2BFC3AE400BE194A /* ContentView.swift in Sources */,
+				F66891EC2BFC43E700BE194A /* VideoCapture.swift in Sources */,
+				F66891F92C02263B00BE194A /* GameService.swift in Sources */,
+				F610604F2C03260900F67949 /* KnockedCount.swift in Sources */,
+				F66891E82BFC3BA600BE194A /* BoxingHand Refined.mlpackage in Sources */,
+				F66891EA2BFC435300BE194A /* ViewController.swift in Sources */,
+				F66891F12BFDE5EA00BE194A /* Character.swift in Sources */,
+				F66891EE2BFCF0C300BE194A /* Predictor.swift in Sources */,
 				F66891D82BFC3AE400BE194A /* BoxingMayhemApp.swift in Sources */,
+				F66891F72C01B92D00BE194A /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,11 +331,12 @@
 				DEVELOPMENT_TEAM = 49V8Q5W76J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app would like to use your camera to recognize your boxing movement";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,11 +361,12 @@
 				DEVELOPMENT_TEAM = 49V8Q5W76J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app would like to use your camera to recognize your boxing movement";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
