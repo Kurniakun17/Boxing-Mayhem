@@ -19,7 +19,6 @@ struct KnockedCount: View {
                 .onAppear {
                     Timer.scheduledTimer(withTimeInterval: 1.25, repeats: true, block: {
                         timer in
-                        print(gameService.knockedCounter)
 
                         if gameService.knockedCounter == "ko" {
                             gameService.knockedCounter = "1"

@@ -35,7 +35,6 @@ struct GameResult: View {
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {
             _ in
 
-            updateSequence()
             updateState()
 
             if state == "knock" {
@@ -61,15 +60,6 @@ struct GameResult: View {
             }
 
         })
-    }
-
-    func updateSequence() {
-        if animationFrame == 1 {
-            sequence = "0"
-
-        } else if animationFrame == 3 {
-            sequence = "1"
-        }
     }
 
     var body: some View {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView2: View {
+struct IPadCamPreview: View {
     @StateObject var gameService = GameService()
     var body: some View {
         NavigationView {
@@ -24,5 +24,5 @@ struct ContentView2: View {
 }
 
 #Preview {
-    ContentView2()
+    IPadCamPreview()
 }

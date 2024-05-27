@@ -29,9 +29,7 @@ class ViewController: UIViewController {
 
 //        previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
-        print(view.frame)
         previewLayer.frame = CGRect(x: 0.0, y: Device.height - 270, width: 480, height: 270)
-
         previewLayer.connection?.videoOrientation = .landscapeLeft
 
 //        Dots Hand
@@ -51,7 +49,8 @@ class ViewController: UIViewController {
     }
 
     private func performPendingAction() {
-        if let pendingAction = actionPending, Date().timeIntervalSince(lastActionTime) >= 0.4 {
+        if let pendingAction = actionPending, Date().timeIntervalSince(lastActionTime) >= 1 {
+            print("runned")
             lastActionTime = Date()
             actionPending = nil
 

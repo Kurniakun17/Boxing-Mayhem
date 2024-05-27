@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F610604F2C03260900F67949 /* KnockedCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610604E2C03260900F67949 /* KnockedCount.swift */; };
-		F61060512C0366B100F67949 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060502C0366B100F67949 /* ContentView2.swift */; };
+		F61060512C0366B100F67949 /* IPadCamPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060502C0366B100F67949 /* IPadCamPreview.swift */; };
 		F61060532C0373F900F67949 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060522C0373F900F67949 /* Game.swift */; };
 		F61060552C0394D700F67949 /* StartGameCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61060542C0394D700F67949 /* StartGameCount.swift */; };
 		F619AB592C03E4B40030D6F5 /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F619AB582C03E4B40030D6F5 /* HealthBar.swift */; };
@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		F610604E2C03260900F67949 /* KnockedCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockedCount.swift; sourceTree = "<group>"; };
-		F61060502C0366B100F67949 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
+		F61060502C0366B100F67949 /* IPadCamPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadCamPreview.swift; sourceTree = "<group>"; };
 		F61060522C0373F900F67949 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		F61060542C0394D700F67949 /* StartGameCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartGameCount.swift; sourceTree = "<group>"; };
 		F619AB582C03E4B40030D6F5 /* HealthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				F66891EF2BFDE5D300BE194A /* Components */,
-				F61060502C0366B100F67949 /* ContentView2.swift */,
+				F61060502C0366B100F67949 /* IPadCamPreview.swift */,
 				F61060522C0373F900F67949 /* Game.swift */,
 				F619AB5C2C03F0110030D6F5 /* GameResult.swift */,
 			);
@@ -218,7 +218,7 @@
 				F66891EE2BFCF0C300BE194A /* Predictor.swift in Sources */,
 				F66891D82BFC3AE400BE194A /* BoxingMayhemApp.swift in Sources */,
 				F66891F72C01B92D00BE194A /* Device.swift in Sources */,
-				F61060512C0366B100F67949 /* ContentView2.swift in Sources */,
+				F61060512C0366B100F67949 /* IPadCamPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

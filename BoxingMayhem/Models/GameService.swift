@@ -14,29 +14,18 @@ class GameService: ObservableObject {
     @Published var opponentFlipped = false
     @Published var playerHealth = 100
     @Published var opponentHealth = 100
-    @Published var winner = ""
-    @Published var movementSet = ["jab", "hook", "uppercut"]
     @Published var knockedCounter = "ko"
     @Published var stateDelay = 0
     @Published var gameState = "lobby"
+    @Published var movementSet = ["jab", "hook", "uppercut"]
+    @Published var winner = ""
 
-    var movementTimer: Timer?
+    private var movementTimer: Timer?
 
-    func opponentStartMove() {
-        movementTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            timer.tolerance = 1
-
-//            Generate Random Move on Opponent
-            let tempMovement: String = self.movementSet.randomElement() ?? "none"
-            self.updateOpponentState(newState: tempMovement)
-        })
-    }
-
-    func stopOpponentMove() {
-        movementTimer?.invalidate()
-    }
+    //  MARK: - Character Reset
 
     func playerResetToNone() {
+        //        Back to None
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             self.playerState = "none"
             self.playerFlipped = false
@@ -50,46 +39,44 @@ class GameService: ObservableObject {
         }
     }
 
-    func stateDelayReset() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            self.stateDelay = 0
+    // MARK: - Opponent Movement
+
+    func startOpponentMove() {
+        movementTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            let tempMovement = self.movementSet.randomElement() ?? "none"
+            self.updateOpponentState(newState: tempMovement)
         }
     }
 
+    func stopOpponentMove() {
+        movementTimer?.invalidate()
+    }
+
+    // MARK: - State Updates
+
     func updatePlayerState(newState: String) {
-        if playerState != "none" {
-            return
-        }
-
+        guard playerState == "none" else { return }
         playerState = newState
-        let randomBool = Bool.random()
-        playerFlipped = randomBool
+        playerFlipped = Bool.random()
 
-//        Back to None
         playerResetToNone()
 
-//        Check if the player punch is valid
         if newState != "none" && opponentState == "none" {
-            opponentHealth -= 100
+            opponentHealth -= 10
             let isKnocked = updateHealth()
 
-            if isKnocked {
-                return
+            if !isKnocked {
+                opponentState = "punched"
+                opponentFlipped = playerFlipped
+                opponentResetToNone()
             }
-
-            opponentState = "punched"
-            opponentFlipped = randomBool
-            opponentResetToNone()
-//            if movementTimer == nil {
-//                opponentStartMove()
-//            }
         }
     }
 
     func updateOpponentState(newState: String) {
         opponentState = newState
-        let randomBool = Bool.random()
-        opponentFlipped = randomBool
+        opponentFlipped = Bool.random()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.opponentState = "none"
@@ -100,15 +87,15 @@ class GameService: ObservableObject {
             playerHealth -= 25
             let isKnocked = updateHealth()
 
-            if isKnocked {
-                return
+            if !isKnocked {
+                playerState = "punched"
+                playerFlipped = opponentFlipped
+                playerResetToNone()
             }
-            playerState = "punched"
-            playerFlipped = randomBool
-
-            playerResetToNone()
         }
     }
+
+    // MARK: - Health Updates
 
     func opponentGetUp() {
         opponentHealth = 75
@@ -128,8 +115,6 @@ class GameService: ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
                 self.opponentState = "knock"
             }
-
-//            stopOpponentMove()
             return true
         }
 

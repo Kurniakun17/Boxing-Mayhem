@@ -121,6 +121,7 @@ struct ContentView: View {
 
                 Button {
                     gameService.gameState = "start"
+                    isGamePlayed = true
                 } label: {
                     Image("fight")
 

@@ -41,8 +41,6 @@ struct Game: View {
                 .cornerRadius(20)
                 .position(x: 150, y: 150)
 
-            JoyStick()
-
             HealthBar(charInfo: CharInfo.player)
                 .position(x: 500/2 + 50, y: 70)
 
@@ -61,8 +59,11 @@ struct Game: View {
 
             if gameService.gameState != "fight" {
                 StartGameCount()
-            } else {
-                VideoPreview()
+            }
+            else {
+                JoyStick()
+//
+//                VideoPreview()
             }
         }
         .environmentObject(gameService)
