@@ -10,52 +10,54 @@ import SwiftUI
 struct JoyStick: View {
     @EnvironmentObject var gameService: GameService
     var body: some View {
-        ZStack {
-            //            Jab
-            Button(action: {
-                gameService.updatePlayerState(newState: "jab")
-            }) {
-                Text("Jab")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 200, y: UIScreen.main.bounds.height - 200)
+        ZStack{
+            VStack {
+                HStack(spacing: 24) {
+                    Button(action: {
+                        gameService.updatePlayerState(newState: "jab")
+                        print("clicked")
+                    }) {
+                        Text("Jab")
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                    }
+                    .disabled(gameService.playerState != "none" ? true : false)
+                    .padding(20)
+                    .background(.black)
+                    .cornerRadius(10)
 
-            //            Hook
-            Button(action: {
-                gameService.updatePlayerState(newState: "hook")
-            }) {
-                Text("Hook")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-            }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 100, y: UIScreen.main.bounds.height - 350)
+                    Button(action: {
+                        gameService.updatePlayerState(newState: "hook")
+                    }) {
+                        Text("Hook")
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                    }
+                    .disabled(gameService.playerState != "none" ? true : false)
+                    .padding(20)
+                    .background(.black)
+                    .cornerRadius(10)
+                }
 
-            //            Uppercut
-            Button(action: {
-                gameService.updatePlayerState(newState: "uppercut")
-            }) {
-                Text("uppercut")
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
+                Button(action: {
+                    gameService.updatePlayerState(newState: "uppercut")
+                }) {
+                    Text("uppercut")
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                }
+                .disabled(gameService.playerState != "none" ? true : false)
+                .padding(20)
+                .background(.black)
+                .cornerRadius(10)
             }
-            .disabled(gameService.playerState != "none" ? true : false)
-            .padding(40)
-            .background(.black)
-            .font(.title)
-            .cornerRadius(20)
-            .position(x: UIScreen.main.bounds.width - 300, y: UIScreen.main.bounds.height - 350)
+            .position(x: Device.width - 200, y: Device.height - 100)
+            .zIndex(99)
         }
     }
 }
 
+#Preview {
+    JoyStick()
+        .environmentObject(GameService())
+}

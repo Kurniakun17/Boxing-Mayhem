@@ -11,20 +11,24 @@ struct HealthBar: View {
     var charInfo: CharInfo
     @State var health = 100
     @EnvironmentObject var gameService: GameService
+    var frameWidth = Device.width * 0.35
+    var frameHeight = 30.0
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray)
-                .frame(width: 500, height: 50)
-            RoundedRectangle(cornerRadius: 20)
-//                .fill(charInfo.type == "player" ? Color.red : Color.blue)
-                .fill(charInfo.type == "player" ? LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .topLeading, endPoint: .bottomTrailing) :
-                    LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .bottomTrailing, endPoint: .topLeading)
-                )
-                .frame(width: CGFloat(500 * (charInfo.type == "player" ? gameService.playerHealth : gameService.opponentHealth) / 100), height: 50)
+                .frame(width: frameWidth, height: frameHeight)
+            RoundedRectangle(cornerRadius: 10)
+                .fill(generateLinearGradient(charInfo.type))
+                .frame(width: CGFloat(Int(frameWidth) * (charInfo.type == "player" ? gameService.playerHealth : gameService.opponentHealth) / 100), height: frameHeight)
                 .animation(.spring())
         }
+    }
+
+    func generateLinearGradient(_ type: String) -> LinearGradient {
+        type == "player" ? LinearGradient(gradient: Gradient(colors: [.red, .yellow]), startPoint: .topLeading, endPoint: .bottomTrailing) :
+            LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .bottomTrailing, endPoint: .topLeading)
     }
 }
 

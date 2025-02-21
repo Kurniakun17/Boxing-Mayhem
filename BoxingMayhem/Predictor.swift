@@ -4,7 +4,6 @@
 //
 //  Created by Kurnia Kharisma Agung Samiadjie on 21/05/24.
 //
-
 import Foundation
 import Vision
 
@@ -15,12 +14,19 @@ protocol PredictorDelegate: AnyObject {
     func predictor(_ predictor: Predictor, didLabelAction action: String, with confidence: Double)
 }
 
-class Predictor {
+class Predictor: ObservableObject {
     weak var delegate: PredictorDelegate?
 
     let predictionWindowSize = 30
     var posesWindow: [VNHumanHandPoseObservation] = []
 
+    private var lastActionTime: Date = .init()
+    private var minimumActionInterval: TimeInterval = 1.0
+    private var confidenceThreshold: Double = 0.9
+    private var lastAction: String?
+    private var actionCounter: Int = 0
+    private var maxConsecutiveActions: Int = 3
+    
     init() {
         posesWindow.reserveCapacity(predictionWindowSize)
     }
@@ -62,7 +68,38 @@ class Predictor {
         let label = predictions.label
         let confidence = predictions.labelProbabilities[label] ?? 0.0
 
-        delegate?.predictor(self, didLabelAction: label, with: confidence)
+        // Check if enough time has passed since last action
+        let currentTime = Date()
+        let timeSinceLastAction = currentTime.timeIntervalSince(lastActionTime)
+
+        // Implement action filtering logic
+        if confidence >= confidenceThreshold, timeSinceLastAction >= minimumActionInterval {
+            // Check for repetitive actions
+            if label == lastAction {
+                actionCounter += 1
+                if actionCounter >= maxConsecutiveActions {
+                    // Increase cooldown for repetitive actions
+                    return
+                }
+            } else {
+                actionCounter = 0
+            }
+
+            // Update state and notify delegate
+            lastAction = label
+            lastActionTime = currentTime
+            delegate?.predictor(self, didLabelAction: label, with: confidence)
+        }
+    }
+
+    // Add method to adjust sensitivity
+    func adjustSensitivity(confidenceThreshold: Double = 0.7,
+                           cooldownInterval: TimeInterval = 1.0,
+                           maxConsecutive: Int = 3)
+    {
+        self.confidenceThreshold = confidenceThreshold
+        minimumActionInterval = cooldownInterval
+        maxConsecutiveActions = maxConsecutive
     }
 
     func prepareInputWithObservation(_ observations: [VNHumanHandPoseObservation]) -> MLMultiArray? {

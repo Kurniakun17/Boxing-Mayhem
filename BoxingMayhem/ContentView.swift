@@ -1,70 +1,7 @@
-//
-//  ContentView.swift
-//  BoxingMayhem
-//
-//  Created by Kurnia Kharisma Agung Samiadjie on 21/05/24.
-//
-
-// import AVFoundation
-// import SwiftUI
-
-// struct VideoPreviewView: UIViewRepresentable {
-//    let videoCapture = VideoCapture()
-//
-//    func makeUIView(context: Context) -> UIView {
-//        let view = UIView()
-//        videoCapture.startCaptureSession()
-//        let previewLayer = AVCaptureVideoPreviewLayer(session: videoCapture.captureSession)
-//        previewLayer.frame = view.bounds
-//        view.layer.addSublayer(previewLayer)
-//        return view
-//    }
-//
-//    func updateUIView(_ uiView: UIView, context: Context) {
-//        // Handle any updates if needed
-//    }
-// }
 
 import AVFoundation
 import SwiftUI
 import UIKit
-
-//
-// final class CameraPreview: UIView {
-//    var previewLayer: AVCaptureVideoPreviewLayer {
-//        layer as! AVCaptureVideoPreviewLayer
-//    }
-//
-//    override class var layerClass: AnyClass {
-//        AVCaptureVideoPreviewLayer.self
-//    }
-// }
-//
-// struct VideoPreviewView: UIViewControllerRepresentable {
-////    let videoCapture = VideoCapture()
-//
-//    func makeUIViewController(context: Context) -> CameraViewController {
-//        let view = CameraViewController()
-//        return view
-//    }
-//
-//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
-// }
-
-// struct ContentView: View {
-//    var body: some View {
-//        VStack {
-//            Text("Hello, Camera!")
-//                .font(.largeTitle)
-//                .padding()
-//
-//            // Add any other UI components here
-//
-//            VideoPreviewView()
-//                .edgesIgnoringSafeArea(.all)
-//        }
-//    }
-// }
 
 struct VideoPreview: UIViewControllerRepresentable {
     @EnvironmentObject var gameService: GameService
@@ -86,15 +23,15 @@ struct ContentView: View {
     @State var bgPosX = Device.width / 2 * 1.2
     @State var goToLeft = false
     @State var isGamePlayed = false
+    @State var playScale = 1.0
 
     var body: some View {
         NavigationView {
             ZStack {
                 Image("background")
                     .resizable()
-                    .frame(width: Device.width * 1.2, height: Device.height)
+                    .frame(width: Device.width, height: Device.height)
                     .position(bgLoc)
-                    .scaledToFill()
                     .background(Color.blue.secondary)
                     .ignoresSafeArea(.all)
                     .onAppear {
@@ -109,6 +46,8 @@ struct ContentView: View {
                         })
                     }
 
+             
+
                 VStack {}
                     .frame(
                         minWidth: 0,
@@ -117,17 +56,27 @@ struct ContentView: View {
                         maxHeight: .infinity,
                         alignment: .topLeading
                     )
-                    .background(Color.gray.opacity(0.3))
+                    .background(Color.black.opacity(0.3))
 
-                Button {
-                    gameService.gameState = "start"
+                Image("logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200)
+                    .offset(y: -100)
+
+                Button(action: {
                     isGamePlayed = true
-                } label: {
-                    Image("fight")
+                }) {
+                    Image("play")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
 
-                }.onTapGesture {
-                    withAnimation(Animation.spring(duration: 1)) {
-                        scaleEffect(1.5)
+                .frame(width: 140, height: 72)
+                .scaleEffect(x: CGFloat(playScale), y: CGFloat(playScale))
+                .onAppear {
+                    withAnimation(Animation.easeInOut(duration: 2).repeatForever()) {
+                        playScale = playScale == 1.0 ? 1.1 : 1.0
                     }
                 }
             }
